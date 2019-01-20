@@ -22,12 +22,17 @@
             padding: 10px;
             display: none;
         }
+        /* 结果对话框 */
         .result span {
             display: inline-block;
-            font-size: 25px;
-            width: 150px;
-            background: #fff;
-            line-height: 30px;
+            /*font-size: 25px;*/
+            font-size: 45px;
+            font-color: #a00;
+            /*width: 250px;*/
+            width: 35%;
+            height: 35%;
+            background: #ff00ff;
+            line-height: 50px;
             color: #000;
             margin: 5px;
             border-radius: 10px;
@@ -135,6 +140,7 @@
 <div id="main" class="wall"></div>
 <div id="result" class="result"></div>
 <div id="tools" class="tools">
+    <input type="file" id="input">
     <button
         v-on="click: onClick($value)"
         class="pure-button"
@@ -155,13 +161,15 @@
 <script type="text/javascript" src="js/member.js"></script>
 <script type="text/javascript">
     (function(){
+        GetMemberList();
         var choosed = JSON.parse(localStorage.getItem('choosed')) || {};
         console.log(choosed);
         var speed = function(){
             return [0.1 * Math.random() + 0.01, -(0.1 * Math.random() + 0.01)];
         };
+
         var getKey = function(item){
-            return item.name + '-' + item.phone;
+            return item.name + '-' + item.id;
         };
         var createHTML = function(){
             var html = [ '<ul>' ];
@@ -194,7 +202,7 @@
                 .map(function(m){
                   choosed[getKey(m)] = 1;
                   list[m.index].style.color = color;
-                  return m.name + '<br/>' + m.phone;
+                  return m.name + '<br/>' + m.id;
                 });
             localStorage.setItem('choosed', JSON.stringify(choosed));
             return ret;
@@ -207,10 +215,10 @@
         new Vue({
             el: '#tools',
             data: {
-                selected: 30,
+                selected: 1,
                 running: false,
                 btns: [
-                    30, 10, 5, 2, 1
+                    1, 2, 3, 5
                 ]
             },
             ready: function(){
